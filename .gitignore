@@ -1,0 +1,17 @@
+debian/
+!debian/*.install
+!debian/*.links
+!debian/*.postinst
+!debian/*.postrm
+!debian/*.prerm
+!debian/*.service
+!debian/changelog
+!debian/compat
+!debian/copyright
+!debian/rules
+!debian/source/
+
+etc/yoyo-os/issue
+etc/yoyo-os/issue.net
+etc/yoyo-os/lsb-release
+etc/yoyo-os/os-release
