@@ -1,4 +1,4 @@
-debian/
+debian/*
 !debian/*.install
 !debian/*.links
 !debian/*.postinst
@@ -7,6 +7,7 @@ debian/
 !debian/*.service
 !debian/changelog
 !debian/compat
+!debian/control
 !debian/copyright
 !debian/rules
 !debian/source/

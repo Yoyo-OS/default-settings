@@ -1,0 +1,7 @@
+#!/usr/bin/make -f
+
+override_dh_installdeb:
+	dh_installdeb
+
+%:
+	dh $@

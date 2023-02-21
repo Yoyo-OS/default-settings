@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -e
+shopt -s nullglob
+
+# Make sure this is in sync with prerm
+package=yoyo-default-settings
+diverts=(
+    "/etc/issue=/etc/yoyo-os/issue"
+    "/etc/issue.net=/etc/yoyo-os/issue.net"
+    "/etc/lsb-release=/etc/yoyo-os/lsb-release"
+    "/etc/os-release=/etc/yoyo-os/os-release"
+    "/usr/lib/os-release=/etc/yoyo-os/os-release"
+)
+
+case "$1" in
+    configure)
+        # Remove Ubuntu Pro advertisement
+        rm -f /etc/apt/apt.conf.d/20apt-esm-hook.conf
+
+        for divert in "${diverts[@]}"
+        do
+            source="${divert%%=*}"
+            dest="${divert#*=}"
+
+            dpkg-divert --add --package yoyo-default-settings --rename --divert "$source.diverted" "$source"
+
+            if [ ! -e "$(dirname "$source")" ]
+            then
+                mkdir --parents "$(dirname "$source")"
+            fi
+
+            if [ -L "$source" -o ! -e "$source" ]
+            then
+                ln --force --relative --symbolic "$dest" "$source"
+            fi
+        done
+        ;;
+    *)
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0
